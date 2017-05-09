@@ -1,7 +1,5 @@
 require 'json'
 
-# _rails_lite_app => {key1: value2, key2: value2}
-
 class Session
   # find the cookie for this app
   # deserialize the cookie into a hash

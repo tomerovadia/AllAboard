@@ -19,11 +19,9 @@ class Route
   # use pattern to pull out route params (save for later?)
   # instantiate controller and call controller action
   def run(req, res)
-    match_data = req.path.match(@pattern)
+    match_data = req.path.match(@pattern) # get wildcard params from url path
     params = {}
-    debugger
-    match_data.names.each {|key| params[key] = match_data[key]}
-    debugger
+    match_data.names.each {|key| params[key] = match_data[key]} # convert match data object to params object
 
     controller_class.new(req, res, params).invoke_action(action_name)
   end

@@ -2,18 +2,19 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
 require_relative './session'
+require_relative './flash'
 require 'active_support/inflector'
 require 'byebug'
 
 class ControllerBase
-  attr_reader :req, :res, :params, :already_built_response, :session
+  attr_reader :req, :res, :params, :already_built_response, :session, :flash
 
   # Setup the controller
   def initialize(req, res, params = {})
     @req = req
     @res = res
     @already_built_response = false
-    @params = req.params.merge(params)
+    @params = req.params.merge(params) # merge path params with other params coming from the request
   end
 
   # Helper method to alias @already_built_response
@@ -29,6 +30,7 @@ class ControllerBase
     @res.set_header('Location', url)
 
     session.store_session(@res)
+    flash.store_flash(@res)
   end
 
   # Populate the response with content.
@@ -40,6 +42,7 @@ class ControllerBase
     @res.write(content)
     @res.set_header('Content-Type', content_type)
     session.store_session(@res) # could also be in #render
+    flash.store_flash(@res) # could also be in #render
   end
 
   # use ERB and binding to evaluate templates
@@ -58,9 +61,13 @@ class ControllerBase
     @session ||= Session.new(@req)
   end
 
+  def flash
+    @flash ||= Flash.new(@req)
+  end
+
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
-    self.send(name)
+    self.send(name) if self.class.method_defined?(name)
 
     unless(@already_built_response)
       render(name.to_s)
