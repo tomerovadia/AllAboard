@@ -1,0 +1,7 @@
+<h1><%= e.class %></h1>
+<p><%= e.message %></p>
+
+<h3>Call trace:</h3>
+<% e.backtrace.each do |level| %>
+  <li> <%= level %> </li>
+<% end %>
