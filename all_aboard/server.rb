@@ -1,8 +1,7 @@
 require 'rack'
-# require './all_aboard/router'
-require_relative './all_aboard/static'
-require_relative './all_aboard/show_exceptions'
-require './config/routes'
+require_relative './static'
+require_relative './show_exceptions'
+require_relative '../config/routes'
 
 include AppRouter
 
