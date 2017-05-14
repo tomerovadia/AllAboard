@@ -22,7 +22,7 @@ class Static
       dir = File.dirname(__FILE__) # get the current file's path
       file_name = path.match(/assets\/(.*)/)[1] # get the file name fromt he path
 
-      path_of_requested_file = [dir, '..', 'assets', file_name].join('/') # find the absolute path using the current file's path
+      path_of_requested_file = [dir, '..', 'app/assets', file_name].join('/') # find the absolute path using the current file's path
 
       # Check if the file exists at the path provided
       if File.exist?(path_of_requested_file)

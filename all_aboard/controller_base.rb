@@ -50,7 +50,7 @@ class ControllerBase
   # Passes the rendered html to render_content
   def render(template_name)
     controller_name = self.class.to_s.underscore
-    path = File.dirname(__FILE__) + "/../views/#{controller_name}/#{template_name}.html.erb"
+    path = File.dirname(__FILE__) + "/../app/views/#{controller_name}/#{template_name}.html.erb"
     raw_contents = File.read(path)
     erb_contents = ERB.new(raw_contents)
     html_content = erb_contents.result(binding)

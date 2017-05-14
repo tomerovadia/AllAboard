@@ -7,7 +7,7 @@ module AppRouter
 
     router.draw do
       get Regexp.new("^/$"), VendingMachinesController, :show
-      delete Regexp.new("^/vending_machines$"), VendingMachinesController, :destroy
+      delete Regexp.new("^/vending-machines$"), VendingMachinesController, :destroy
       post Regexp.new("^/items$"), ItemsController, :create
       delete Regexp.new("^/items/(?<id>.+)$"), ItemsController, :destroy
     end

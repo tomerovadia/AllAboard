@@ -1,5 +1,5 @@
 require 'rack'
-require_relative '../all_aboard/controller_base'
+require_relative '../../all_aboard/controller_base'
 Dir[File.dirname(__FILE__) + "/../models/*.rb"].each {|file| require_relative file }
 
 class VendingMachinesController < ControllerBase
@@ -32,7 +32,7 @@ class VendingMachinesController < ControllerBase
   def destroy
     session['vending_machine'] = nil
 
-    redirect_to '/vending_machines'
+    redirect_to '/'
   end
 
 end

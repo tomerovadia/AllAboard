@@ -1,4 +1,4 @@
-Dir[File.dirname(__FILE__) + "/../controllers/*.rb"].each {|file| require_relative file }
+Dir[File.dirname(__FILE__) + "/../app/controllers/*.rb"].each {|file| require_relative file }
 
 class Route
   attr_reader :pattern, :http_method, :controller_class, :action_name
