@@ -47,7 +47,7 @@
       <div id='upper-panel-buttons'>
         <% alt_user_mode = @user_mode == 'customer' ? 'operator' : 'customer' %>
         <button id='reset-button' class='upper-panel-button'>Reset</button>
-        <a id='switch-user-mode-a' class='upper-panel-button' href='vending_machines?user-mode=<%= alt_user_mode %>'>
+        <a id='switch-user-mode-a' class='upper-panel-button' href='/?user-mode=<%= alt_user_mode %>'>
           <%= @user_mode == 'customer' ? 'View as Operator' : 'View as Customer' %>
         </a>
         <form action="/items" method="post"><input type='submit' id='force-error-button' class='upper-panel-button' value='Force Error'></input></form>

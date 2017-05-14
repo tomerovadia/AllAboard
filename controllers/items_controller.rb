@@ -8,13 +8,13 @@ class ItemsController < ControllerBase
     new_item = Item.new({name: params['item']['name'], price: params['item']['price']})
     session['vending_machine'][new_item.id] = new_item
 
-    redirect_to '/vending_machines'
+    redirect_to '/'
   end
 
   def destroy
     session['vending_machine'].delete(params['id'])
 
-    redirect_to '/vending_machines'
+    redirect_to '/'
   end
 
 end
