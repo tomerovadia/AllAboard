@@ -30,15 +30,6 @@
 
         });
 
-        $('#force-error-button').on('click', function() {
-
-          $.ajax({
-            method: 'gimme-an-error',
-            url: '/please',
-          });
-
-        });
-
       });
     </script>
 
@@ -59,7 +50,7 @@
         <a id='switch-user-mode-a' class='upper-panel-button' href='vending_machines?user-mode=<%= alt_user_mode %>'>
           <%= @user_mode == 'customer' ? 'View as Operator' : 'View as Customer' %>
         </a>
-        <button id='force-error-button' class='upper-panel-button'>Force Error</button>
+        <form action="/items" method="post"><input type='submit' id='force-error-button' class='upper-panel-button' value='Force Error'></input></form>
       </div>
     </div>
 
