@@ -1,30 +1,23 @@
 require 'rack'
-require './all_aboard/router'
+# require './all_aboard/router'
 require_relative './all_aboard/static'
 require_relative './all_aboard/show_exceptions'
+require './config/routes'
 
-router = Router.new
+include AppRouter
 
-router.draw do
-  get Regexp.new("^/vending_machines$"), VendingMachinesController, :show
-  delete Regexp.new("^/vending_machines$"), VendingMachinesController, :destroy
-  post Regexp.new("^/items$"), ItemsController, :create
-  delete Regexp.new("^/items/(?<id>.+)$"), ItemsController, :destroy
-end
-
-# Define an object that responds to .call, per Rack requirements
+# Defines an object that responds to .call, per Rack requirements
 app = Proc.new do |env|
   req = Rack::Request.new(env)
   res = Rack::Response.new
-  res['Content-Type'] = 'text/html'
 
-  path = req.get_header('REQUEST_PATH')
-
+  router = AppRouter.draw_router
   router.run(req, res)
 
   res.finish
 end
 
+# Adds middleware for handling expcetions and static assets
 app = Rack::Builder.new do
   use ShowExceptions
   use Static

@@ -9,7 +9,7 @@ require 'byebug'
 class ControllerBase
   attr_reader :req, :res, :params, :already_built_response, :session, :flash
 
-  # Setup the controller
+  # Set up the controller
   def initialize(req, res, params = {})
     @req = req
     @res = res
@@ -33,9 +33,9 @@ class ControllerBase
     flash.store_flash(@res)
   end
 
-  # Populate the response with content.
-  # Set the response's content type to the given type.
-  # Raise an error if the developer tries to double render.
+  # Populates the response with content.
+  # Sets the response's content type to the given type.
+  # Raises an error if the developer tries to double render.
   def render_content(content, content_type)
     raise 'Double render error' if @already_built_response
     @already_built_response = true
@@ -46,8 +46,8 @@ class ControllerBase
   end
 
 
-  # use ERB and binding to evaluate templates
-  # pass the rendered html to render_content
+  # Uses ERB and binding to evaluate templates
+  # Passes the rendered html to render_content
   def render(template_name)
     controller_name = self.class.to_s.underscore
     path = File.dirname(__FILE__) + "/../views/#{controller_name}/#{template_name}.html.erb"
@@ -68,7 +68,7 @@ class ControllerBase
     @flash ||= Flash.new(@req)
   end
 
-  # use this with the router to call action_name (:index, :show, :create...)
+  # Used with router to call name (:index, :show, :create...)
   def invoke_action(name)
     self.send(name) if self.class.method_defined?(name)
 

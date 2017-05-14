@@ -11,7 +11,6 @@ class ShowExceptions
     begin
       app.call(env)
     rescue Exception => e
-      # render_exception(e)
       return ['500', {'Content-type' => 'text/html'}, [render_exception(e)]]
     end
   end

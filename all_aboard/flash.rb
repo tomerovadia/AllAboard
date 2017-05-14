@@ -5,7 +5,7 @@ class Flash
   attr_reader :now
 
   def initialize(req)
-    # storee three different flashes with three different persistences
+    # stores three different flashes with three different persistences
     # now: never sent back to the user (not really a cookie)
     # old_flash: read-only flash data sent with request from user browser
     # new_flash: ready/write flash data added this session and to be sent back to user
