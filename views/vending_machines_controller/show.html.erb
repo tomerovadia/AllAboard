@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vending Machine</title>
+
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+
+    <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type="text/javascript">
+      $(() => {
+
+        $('.remove-purchase-button').on('click', function() {
+          const id = $(this).parent().parent().data().id
+
+          $.ajax({
+            method: 'delete',
+            url: `/items/${id}`,
+          });
+        });
+
+
+        $('#reset-button').on('click', function() {
+
+          $.ajax({
+            method: 'delete',
+            url: '/vending_machines',
+          });
+
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+
+    <h1>Vending Machine</h1>
+
+    <h3>$10</h3>
+
+
+    <div id='vending-machine-div' class='clearfix'>
+      <% alt_button_text = @user_mode == 'customer' ? 'Purchase' : 'Remove' %>
+
+      <% @vending_machine.items.each do |item| %>
+        <div class='item-div' data-id='<%= item.id %>'>
+          <h4 class='item-name'><%= item.name %></h4>
+
+          <% file_name = @name_to_image_filename[item.name.downcase.to_sym] %>
+          <img class='item-image' src="assets/images/<%= file_name %>">
+
+          <div class='button-item-and-price-div'>
+            <button class='remove-purchase-button'><%= alt_button_text %></button>
+            <div class='item-and-price-div'>
+              <span class='item-price'><%= item.price %></span>
+              <span class='item-id'><%= item.id %></span>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+    </div>
+
+    <form action="/items" method="post">
+      <label for="items_name">Name</label>
+      <input type="text" name="item[name]">
+
+      <label for="items_price">Price</label>
+      <input type="text" name="item[price]">
+
+      <input type="submit">
+    </form>
+
+    <button id='reset-button'>Reset</button>
+
+    <% alt_user_mode = @user_mode == 'customer' ? 'operator' : 'customer' %>
+
+    <a id='switch-user-mode-a' href='vending_machines?user-mode=<%= alt_user_mode %>'>
+      <%= @user_mode == 'customer' ? 'View as Operator' : 'View as Customer' %>
+    </a>
+
+  </body>
+</html>

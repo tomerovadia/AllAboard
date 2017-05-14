@@ -8,7 +8,8 @@ class Static
   MIME_TYPES = {
     '.txt' => 'text/plain',
     '.jpg' => 'image/jpeg',
-    '.zip' => 'application/zip'
+    '.zip' => 'application/zip',
+    '.css' => 'text/css'
   }
 
   def call(env)
@@ -16,12 +17,12 @@ class Static
     res = Rack::Response.new
     path = req.path
 
-    # Check if the path includes /public/ and thus if a static asset is being accessed
-    if path.include?('/public/')
+    # Check if the path includes /assets/ and thus if a static asset is being accessed
+    if path.include?('/assets/')
       dir = File.dirname(__FILE__) # get the current file's path
-      file_name = path.match(/public\/(.*)/)[1] # get the file name fromt he path
+      file_name = path.match(/assets\/(.*)/)[1] # get the file name fromt he path
 
-      path_of_requested_file = [dir, '..', 'public', file_name].join('/') # find the absolute path using the current file's path
+      path_of_requested_file = [dir, '..', 'assets', file_name].join('/') # find the absolute path using the current file's path
 
       # Check if the file exists at the path provided
       if File.exist?(path_of_requested_file)
@@ -33,7 +34,7 @@ class Static
         res.write("File not found")
       end
 
-    else # If 'public' is not path of the path, move on
+    else # If 'assets' is not in the path, move on
       res = app.call(env)
     end
 

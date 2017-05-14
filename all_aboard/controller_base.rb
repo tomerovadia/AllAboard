@@ -26,7 +26,7 @@ class ControllerBase
   def redirect_to(url)
     raise 'Double render error' if @already_built_response
     @already_built_response = true
-    @res.status = 302
+    @res.status = 303
     @res.set_header('Location', url)
 
     session.store_session(@res)
@@ -45,21 +45,24 @@ class ControllerBase
     flash.store_flash(@res) # could also be in #render
   end
 
+
   # use ERB and binding to evaluate templates
   # pass the rendered html to render_content
   def render(template_name)
     controller_name = self.class.to_s.underscore
-    path = "views/#{controller_name}/#{template_name}.html.erb"
+    path = File.dirname(__FILE__) + "/../views/#{controller_name}/#{template_name}.html.erb"
     raw_contents = File.read(path)
     erb_contents = ERB.new(raw_contents)
     html_content = erb_contents.result(binding)
     render_content(html_content, 'text/html')
   end
 
+
   # method exposing a `Session` object
   def session
     @session ||= Session.new(@req)
   end
+
 
   def flash
     @flash ||= Flash.new(@req)
