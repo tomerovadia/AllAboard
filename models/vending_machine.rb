@@ -12,7 +12,8 @@ class VendingMachine
       Item.new({name: 'Cheetos', price: '$0.25'}),
       Item.new({name: 'M&Ms', price: '$0.30'}),
       Item.new({name: 'Swedish Fish', price: '$0.20'}),
-      Item.new({name: 'Starburst', price: '$0.05'})
+      Item.new({name: 'Starburst', price: '$0.05'}),
+      Item.new({name: 'Cheez-Its', price: '$0.20'})
     ]
 
     if itemsFromCookie

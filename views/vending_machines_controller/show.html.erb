@@ -5,8 +5,9 @@
     <title>Vending Machine</title>
 
     <link rel="stylesheet" href="assets/stylesheets/main.css">
-
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon"/>
     <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
     <script type="text/javascript">
       $(() => {
 
@@ -29,18 +30,41 @@
 
         });
 
+        $('#force-error-button').on('click', function() {
+
+          $.ajax({
+            method: 'gimme-an-error',
+            url: '/please',
+          });
+
+        });
+
       });
     </script>
 
+    <% background_image = @user_mode == 'customer' ? 'none' : 'url("../../assets/images/circuit_background.jpg")' %>
+
   </head>
-  <body>
 
-    <h1>Vending Machine</h1>
+  <body style='background-image: <%= background_image %>;'>
 
-    <h3>$10</h3>
+    <div id='upper-panel'>
+      <h1>Vending Machine</h1>
+
+      <p>This machine demonstrates <a href='https://github.com/tomerovadia/AllAboard' target="_blank">All Aboard</a>, a light-weight web application framework.</p>
+
+      <div id='upper-panel-buttons'>
+        <% alt_user_mode = @user_mode == 'customer' ? 'operator' : 'customer' %>
+        <button id='reset-button' class='upper-panel-button'>Reset</button>
+        <a id='switch-user-mode-a' class='upper-panel-button' href='vending_machines?user-mode=<%= alt_user_mode %>'>
+          <%= @user_mode == 'customer' ? 'View as Operator' : 'View as Customer' %>
+        </a>
+        <button id='force-error-button' class='upper-panel-button'>Force Error</button>
+      </div>
+    </div>
 
 
-    <div id='vending-machine-div' class='clearfix'>
+    <div id='vending-machine' class='clearfix'>
       <% alt_button_text = @user_mode == 'customer' ? 'Purchase' : 'Remove' %>
 
       <% @vending_machine.items.each do |item| %>
@@ -60,25 +84,49 @@
 
         </div>
       <% end %>
+
+
+      <% add_item_div_display = @user_mode == 'customer' ? 'none' : 'block' %>
+
+      <div class='item-div add-item-div' style='display: <%= add_item_div_display %>;'>
+
+        <form id='add-item-form' action="/items" method="post">
+          <h3>Add new item</h3>
+
+
+          <div id='item-name-inputs'>
+            <label><input type="radio" value='Doritos' name="item[name]" checked><span>Doritos</span></label>
+            <label><input type="radio" value='Skittles' name="item[name]"><span>Skittles</span></label>
+            <label><input type="radio" value='Cheetos' name="item[name]"><span>Cheetos</span></label>
+            <label><input type="radio" value='M&amp;Ms' name="item[name]"><span>M&amp;Ms</span></label>
+            <label><input type="radio" value='Swedish Fish' name="item[name]"><span>Swedish Fish</span></label>
+            <label><input type="radio" value='Starburst' name="item[name]"><span>Starburst</span></label>
+            <label><input type="radio" value='Cheez-Its' name="item[name]"><span>Cheez-Its</span></label>
+          </div>
+
+          <select name='item[price]'>
+            <option>$0.10</option>
+            <option>$0.20</option>
+            <option>$0.30</option>
+            <option>$0.40</option>
+            <option>$0.50</option>
+            <option>$0.60</option>
+            <option>$0.70</option>
+            <option>$0.80</option>
+            <option>$0.90</option>
+          </select>
+
+          <input id='create-new-item-input-submit' type="submit" value='Add'>
+        </form>
+
+
+      </div>
+
+
     </div>
 
-    <form action="/items" method="post">
-      <label for="items_name">Name</label>
-      <input type="text" name="item[name]">
 
-      <label for="items_price">Price</label>
-      <input type="text" name="item[price]">
 
-      <input type="submit">
-    </form>
-
-    <button id='reset-button'>Reset</button>
-
-    <% alt_user_mode = @user_mode == 'customer' ? 'operator' : 'customer' %>
-
-    <a id='switch-user-mode-a' href='vending_machines?user-mode=<%= alt_user_mode %>'>
-      <%= @user_mode == 'customer' ? 'View as Operator' : 'View as Customer' %>
-    </a>
 
   </body>
 </html>

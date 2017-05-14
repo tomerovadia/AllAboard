@@ -19,7 +19,7 @@ class ShowExceptions
   private
 
   def render_exception(e)
-    path = "lib/templates/rescue.html.erb"
+    path = File.dirname(__FILE__) + "/templates/rescue.html.erb"
     raw_contents = File.read(path)
     erb_contents = ERB.new(raw_contents)
     html_content = erb_contents.result(binding)

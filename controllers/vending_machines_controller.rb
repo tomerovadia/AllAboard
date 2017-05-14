@@ -14,6 +14,7 @@ class VendingMachinesController < ControllerBase
       'm&ms': 'm&ms.jpeg',
       'swedish fish': 'swedish_fish.jpeg',
       'starburst': 'starburst.png',
+      'cheez-its': 'cheez_its.jpg',
     }
 
     @vending_machine = VendingMachine.new(itemsFromCookie)
