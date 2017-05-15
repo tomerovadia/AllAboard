@@ -2,7 +2,7 @@ require 'json'
 
 class Flash
 
-  attr_reader :now
+  attr_accessor :now
 
   def initialize(req)
     # stores three different flashes with three different persistences
@@ -14,8 +14,8 @@ class Flash
     @new_flash = {}
 
     @old_flash = {}
-    if req.cookies['_rails_lite_app_flash']
-      @old_flash = JSON.parse(req.cookies['_rails_lite_app_flash'])
+    if req.cookies['_all_aboard_flash']
+      @old_flash = JSON.parse(req.cookies['_all_aboard_flash'])
     end
   end
 
@@ -31,8 +31,8 @@ class Flash
 
   # store the flash as cookie in preparation for shipping back to user
   def store_flash(res)
-    # res.delete_cookie(:_rails_lite_app_flash)
-    res.set_cookie(:_rails_lite_app_flash, {path: '/', value: @new_flash.to_json})
+    # res.delete_cookie(:_all_aboard_flash)
+    res.set_cookie(:_all_aboard_flash, {path: '/', value: @new_flash.to_json})
   end
 
 end

@@ -1,13 +1,13 @@
 require 'json'
 
-# _rails_lite_app => {key1: value2, key2: value2}
+# _all_aboard => {key1: value2, key2: value2}
 
 class Session
   # find the cookie for this app
   # deserialize the cookie into a hash
   def initialize(req)
-    if req.cookies['_rails_lite_app']
-      @my_cookie_value = JSON.parse(req.cookies['_rails_lite_app'])
+    if req.cookies['_all_aboard']
+      @my_cookie_value = JSON.parse(req.cookies['_all_aboard'])
     else
       @my_cookie_value = {}
     end
@@ -24,6 +24,6 @@ class Session
   # serialize the hash into json and save in a cookie
   # add to the responses cookies
   def store_session(res)
-    res.set_cookie(:_rails_lite_app, {path: '/', value: @my_cookie_value.to_json})
+    res.set_cookie(:_all_aboard, {path: '/', value: @my_cookie_value.to_json})
   end
 end
